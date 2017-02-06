@@ -24,11 +24,6 @@ var opts = {
 
 gitHub(opts);
 
-
 // describe('gulp-github: test', function () {
-
 //     gitHub(opts);
-
-//     // assert.ok(gitHub(opts));
-
 // })
