@@ -81,6 +81,8 @@ module.exports = function (opts) {
     //
     // INJECT CREDENTIALS INTO REPOSITORYURL
     //
+
+        
     repositoryUrl = repositoryUrl.replace(/^https:\/\//, 'https://' + auth.userName + ':' + (auth.token || auth.password) + '@');
     var rememberedWorkDir = shell.pwd();
 

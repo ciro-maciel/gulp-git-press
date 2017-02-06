@@ -12,7 +12,7 @@ var opts = {
         email: 'ciro.maciel@c37.co'
     },
     auth: {
-        userName: 'ciro.maciel',
+        userName: 'ciro-maciel',
         token: '6eacab981c36f7e92d9ab243aad70b927339d9e3'
     },
     repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
