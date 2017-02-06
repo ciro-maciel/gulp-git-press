@@ -13,7 +13,7 @@ var opts = {
     },
     auth: {
         userName: 'ciro.maciel',
-        token: 'b79e2ac9b3008d00429fb0750e0b10aacc32aa71'
+        token: '6eacab981c36f7e92d9ab243aad70b927339d9e3'
     },
     repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
     branchName: 'master',
@@ -21,8 +21,13 @@ var opts = {
 }
 
 
-describe('gulp-github: test', function () {
+gitHub(opts);
 
-    assert.ok(gitHub(opts));
 
-})
+// describe('gulp-github: test', function () {
+
+//     gitHub(opts);
+
+//     // assert.ok(gitHub(opts));
+
+// })

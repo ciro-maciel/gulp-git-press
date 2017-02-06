@@ -108,41 +108,58 @@ module.exports = function (opts) {
         //
         shell.cd(CLONE_DIR);
 
-        var cmdStatus = shell.exec('git status --porcelain | wc -l', {
+        var result = shell.exec('git status --porcelain | wc -l', {
             silent: true
-        }, function (code, stdout, stderr) {
+        }).stdout;
 
-            gutil.log('xkxkxk');
-            gutil.log('Program stderr:', stderr);
+        gutil.log(result);
 
-            if (stdout.trim() === '0') {
-                gutil.log('nothing to commit. quitting.');
-            } else {
-                gutil.log('changes detected. pushing changes ... please wait');
-                shell.exec('git add . -A');
-                shell.exec('git commit -m "deploy by gulp-github"');
-                shell.exec('git push');
-            }
+        if (result === '0') {
+            gutil.log('nothing to commit. quitting.');
+        } else {
+            gutil.log('changes detected. pushing changes ... please wait');
+            shell.exec('git add . -A');
+            shell.exec('git commit -m "deploy by gulp-github"');
+            shell.exec('git push');
+        }
 
-            //
-            // POST CLEANUP
-            //
-            shell.cd(rememberedWorkDir);
-            gutil.log('cleanup. deleting ' + CLONE_DIR + '... please wait');
-            shell.rm('-rf', CLONE_DIR);
 
-            //
-            // RESTORE EXISTING .git
-            //
-            if (shell.test('-d', '_git_BACKUP_TMP')) {
-                gutil.log('RESTORING existing .git directory.');
-                shell.mv('_git_BACKUP_TMP', '.git');
-            }
 
-            gutil.log('all done.');
+        // var cmdStatus = shell.exec('git status --porcelain | wc -l', {
+        //     silent: false
+        // }, function (code, stdout, stderr) {
 
-            return true;
-        });
+        //     gutil.log('xkxkxk');
+        //     gutil.log('Program stderr:', stderr);
+
+        //     if (stdout.trim() === '0') {
+        //         gutil.log('nothing to commit. quitting.');
+        //     } else {
+        //         gutil.log('changes detected. pushing changes ... please wait');
+        //         shell.exec('git add . -A');
+        //         shell.exec('git commit -m "deploy by gulp-github"');
+        //         shell.exec('git push');
+        //     }
+
+        //     //
+        //     // POST CLEANUP
+        //     //
+        //     shell.cd(rememberedWorkDir);
+        //     gutil.log('cleanup. deleting ' + CLONE_DIR + '... please wait');
+        //     shell.rm('-rf', CLONE_DIR);
+
+        //     //
+        //     // RESTORE EXISTING .git
+        //     //
+        //     if (shell.test('-d', '_git_BACKUP_TMP')) {
+        //         gutil.log('RESTORING existing .git directory.');
+        //         shell.mv('_git_BACKUP_TMP', '.git');
+        //     }
+
+        //     gutil.log('all done.');
+
+        //     return true;
+        // });
 
     } else {
         gutil.log('WARN  directoryContents does not exist: ' + directoryContents);
