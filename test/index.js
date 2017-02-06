@@ -13,11 +13,12 @@ var opts = {
     },
     auth: {
         userName: 'ciro-maciel',
-        token: '6eacab981c36f7e92d9ab243aad70b927339d9e3'
+        token: '689490a71ac4f92a3c268d464f44b5824ea15a8c'
     },
     repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
     branchName: 'master',
-    directoryContents: 'build'
+    tagName: 'v0.0.10',
+    directory: 'build'
 }
 
 
