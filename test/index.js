@@ -1,6 +1,7 @@
 'use strict';
 
 var gitHub = require('..');
+var assert = require('assert');
 
 require('mocha');
 
@@ -22,7 +23,6 @@ var opts = {
 
 describe('gulp-github: test', function () {
 
-
-    gitHub(opts)
+    assert.ok(gitHub(opts));
 
 })

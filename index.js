@@ -100,13 +100,10 @@ module.exports = function (opts) {
     //
     gutil.log('cloning ... please wait');
 
-    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + cloneUrl + ' ' + CLONE_DIR).code !== 0){
+    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + cloneUrl + ' ' + CLONE_DIR).code !== 0) {
         gutil.log('Error cloning failed. Quitting.');
         shell.exit(1);
     }
-
-    gutil.log(gitClone);
-
 
     // if (subDirectory !== undefined && subDirectory !== null) {
     //     if (!shell.test('-d', CLONE_DIR + '/' + subDirectory)) {
@@ -121,15 +118,24 @@ module.exports = function (opts) {
         shell.rm('-rf', workspace + '/*');
         shell.cp('-r', directoryContents + '/*', workspace + '/');
         // copy hidden files as well
-        shell.cp('-r', directoryContents + '/.*', workspace + '/');
+        //shell.cp('-r', directoryContents + '/.*', workspace + '/');
 
         //
         // ADD, COMMIT AND PUSH TO GH-PAGES
         //
         shell.cd(CLONE_DIR);
-        shell.exec('git status --porcelain | wc -l', {
-            silent: true
+
+        gutil.log(shell.pwd());
+
+
+        var cmdStatus = shell.exec('git status --porcelain | wc -l', {
+            // silent: true
+            async: true
         }, function (code, stdout, stderr) {
+
+            gutil.log('xkxkxk');
+            gutil.log('Program stderr:', stderr);
+
             if (stdout.trim() === '0') {
                 gutil.log('nothing to commit. quitting.');
             } else {
@@ -155,7 +161,24 @@ module.exports = function (opts) {
             }
 
             gutil.log('all done.');
+
+            return true;
         });
+
+        // gutil.log(cmdStatus);
+
+        cmdStatus.stdout.on('data', function (data) {
+            gutil.log(data);
+        });
+
+        if (cmdStatus.code !== 0) {
+
+            gutil.log('Error cloning failed. Quitting.');
+            // shell.exit(1);
+            return true;
+
+        }
+
     } else {
         gutil.log('WARN  directoryContents does not exist: ' + directoryContents);
     }
