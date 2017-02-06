@@ -15,7 +15,7 @@ var opts = {
         userName: 'ciro.maciel',
         token: 'b79e2ac9b3008d00429fb0750e0b10aacc32aa71'
     },
-    cloneUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
+    repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
     branchName: 'master',
     directoryContents: 'build'
 }

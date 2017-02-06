@@ -20,16 +20,15 @@ module.exports = function (opts) {
             token: opts.auth.token,
             password: opts.auth.password
         },
-        cloneUrl = opts.cloneUrl,
+        repositoryUrl = opts.repositoryUrl,
         branchName = opts.branchName,
-        // subDirectory = opts.subDirectory,
         directoryContents = opts.directoryContents;
 
     //
     // BANNER
     //
     gutil.log('==============================');
-    gutil.log('DEPLOY TO GITHUB');
+    gutil.log('CLONE/DEPLOY TO GITHUB');
     gutil.log('==============================');
 
     var gitVersion = shell.exec('git --version', {
@@ -38,25 +37,16 @@ module.exports = function (opts) {
 
     var workspace = CLONE_DIR;
 
-    // if (subDirectory !== undefined && subDirectory !== null) {
-    //     workspace = CLONE_DIR + '/' + subDirectory;
-    // }
-
     //
     // PARAMS
     //
-    gutil.log('git version:           ' + gitVersion.trim());
-    gutil.log('git committer email:   ' + committer.email);
-    gutil.log('git committer name:    ' + committer.name);
-    gutil.log('git auth username:     ' + auth.userName);
-    gutil.log('git auth token:        ******');
-    gutil.log('git clone url:         ' + cloneUrl);
-    gutil.log('git branch:            ' + branchName);
-    // if (subDirectory !== undefined && subDirectory !== null) {
-    //     gutil.log('git subdirectory:      ' + subDirectory);
-    // }
-    gutil.log('source to deploy:      ' + directoryContents);
-    gutil.log('workspace:             ' + workspace);
+    gutil.log('committer email:     ' + committer.email);
+    gutil.log('committer name:      ' + committer.name);
+    gutil.log('auth username:       ' + auth.userName);
+    gutil.log('auth token:          ******');
+    gutil.log('repository url:      ' + repositoryUrl);
+    gutil.log('branch:              ' + branchName);
+    gutil.log('directory to deploy: ' + directoryContents);
     gutil.log('=============================');
 
     //
@@ -89,48 +79,37 @@ module.exports = function (opts) {
     });
 
     //
-    // INJECT CREDENTIALS INTO CLONEURL
+    // INJECT CREDENTIALS INTO REPOSITORYURL
     //
-    cloneUrl = cloneUrl.replace(/^https:\/\//, 'https://' + auth.userName + ':' + (auth.token || auth.password) + '@');
+    repositoryUrl = repositoryUrl.replace(/^https:\/\//, 'https://' + auth.userName + ':' + (auth.token || auth.password) + '@');
     var rememberedWorkDir = shell.pwd();
-
 
     //
     // CLONE
     //
     gutil.log('cloning ... please wait');
 
-    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + cloneUrl + ' ' + CLONE_DIR).code !== 0) {
+    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR, {
+            silent: true
+        }).code !== 0) {
         gutil.log('Error cloning failed. Quitting.');
         shell.exit(1);
     }
 
-    // if (subDirectory !== undefined && subDirectory !== null) {
-    //     if (!shell.test('-d', CLONE_DIR + '/' + subDirectory)) {
-    //         shell.mkdir(CLONE_DIR + '/' + subDirectory);
-    //     }
-    // }
-
     if (shell.test('-d', directoryContents)) {
         //
-        // COPY BUILD ARTIFACTS
+        // COPY ARTIFACTS
         //
         shell.rm('-rf', workspace + '/*');
         shell.cp('-r', directoryContents + '/*', workspace + '/');
-        // copy hidden files as well
-        //shell.cp('-r', directoryContents + '/.*', workspace + '/');
 
         //
-        // ADD, COMMIT AND PUSH TO GH-PAGES
+        // ADD, COMMIT AND PUSH TO GITHUB
         //
         shell.cd(CLONE_DIR);
 
-        gutil.log(shell.pwd());
-
-
         var cmdStatus = shell.exec('git status --porcelain | wc -l', {
-            // silent: true
-            async: true
+            silent: true
         }, function (code, stdout, stderr) {
 
             gutil.log('xkxkxk');
@@ -164,20 +143,6 @@ module.exports = function (opts) {
 
             return true;
         });
-
-        // gutil.log(cmdStatus);
-
-        cmdStatus.stdout.on('data', function (data) {
-            gutil.log(data);
-        });
-
-        if (cmdStatus.code !== 0) {
-
-            gutil.log('Error cloning failed. Quitting.');
-            // shell.exit(1);
-            return true;
-
-        }
 
     } else {
         gutil.log('WARN  directoryContents does not exist: ' + directoryContents);
