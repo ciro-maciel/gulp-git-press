@@ -3,7 +3,7 @@
     "description": "Clone/Deploy selected folder to GitHub with Gulp (gulpjs.com)",
     "version": "0.0.1",
     "homepage": "https://github.com/ciro-maciel/gulp-github",
-    "repository": "git://github.com/stevelacy/gulp-github.git",
+    "repository": "git://github.com/ciro-maciel/gulp-github.git",
     "author": "Ciro Cesar Maciel <ciro.maciel@c37.co>",
     "main": "./index.js",
     "dependencies": {
