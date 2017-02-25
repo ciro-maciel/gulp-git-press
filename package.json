@@ -12,10 +12,8 @@
         "gulp-util": "latest"
     },
     "devDependencies": {
-        "mocha": "latest"
     },
     "scripts": {
-        "test": "mocha"
     },
     "engines": {},
     "keywords": [

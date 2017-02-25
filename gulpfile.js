@@ -42,7 +42,7 @@ gulp.task('deploy', function () {
         repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
         branchName: 'master',
         tagName: 'v0.0.10',
-        directory: 'build'
+        directory: 'deploy'
     }
 
     github(opts);
