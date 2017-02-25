@@ -13,7 +13,7 @@ var opts = {
     },
     auth: {
         userName: 'ciro-maciel',
-        token: '689490a71ac4f92a3c268d464f44b5824ea15a8c'
+        token: 'OTZjMGY2ODZjZjUzOGYzNmU3YmFmZTJhNTUxODlmM2M3ZWU0MWZiNQ=='
     },
     repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
     branchName: 'master',
@@ -21,6 +21,7 @@ var opts = {
     directory: 'build'
 }
 
+// https://www.base64encode.org/
 
 gitHub(opts);
 

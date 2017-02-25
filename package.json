@@ -7,11 +7,12 @@
     "author": "Ciro Cesar Maciel <ciro.maciel@c37.co>",
     "main": "./index.js",
     "dependencies": {
-        "shelljs": "*",
-        "gulp-util": "*"
+        "gulp": "latest",
+        "shelljs": "latest",
+        "gulp-util": "latest"
     },
     "devDependencies": {
-        "mocha": "*"
+        "mocha": "latest"
     },
     "scripts": {
         "test": "mocha"
