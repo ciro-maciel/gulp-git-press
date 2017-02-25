@@ -81,7 +81,7 @@ module.exports = function (opts) {
 
     // salvamos o local do directory que estamos, para depois retornar
     var rememberedWorkDir = shell.pwd();
-
+ 
 
     gutil.log('cloning ... please wait');
 
