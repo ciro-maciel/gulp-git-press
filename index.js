@@ -3,7 +3,10 @@
 // https://github.com/shelljs/shelljs
 var shell = require('shelljs'),
     gutil = require('gulp-util'),
-    exec = require('child_process').execSync;
+    // https://github.com/shelljs/shelljs/issues/165
+    exec = require('child_process').execSync,
+    // https://github.com/mathiasbynens/base64
+    base64 = require('base-64');
 
 var CLONE_DIR = '_gulp-github',
     PLUGIN_NAME = 'gulp-bump';
@@ -77,23 +80,25 @@ module.exports = function (opts) {
     }
 
     // configuramos as credencias na url de acesso
-    repositoryUrl = repositoryUrl.replace(/^https:\/\//, 'https://' + auth.userName + ':' + (auth.token || auth.password) + '@');
+    repositoryUrl = repositoryUrl.replace(/^https:\/\//, 'https://' + auth.userName + ':' + (base64.decode(auth.token) || auth.password) + '@');
 
     // salvamos o local do directory que estamos, para depois retornar
     var rememberedWorkDir = shell.pwd();
- 
+
 
     gutil.log('cloning ... please wait');
 
     // https://github.com/shelljs/shelljs/issues/165
     // testes para lock 
-    // exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR, { stdio: 'inherit' });
+    exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR, {
+        stdio: 'inherit'
+    });
 
     // executamos o clone do repository no directory informado
-    // nao usar silent - aparentemente causando um lock! ;(
-    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR).code !== 0) {
-        throw new gutil.PluginError(PLUGIN_NAME, 'Error cloning failed. Quitting.', opts);
-    }
+    // nao usar - aparentemente causando um lock! ;(
+    // if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR).code !== 0) {
+    //     throw new gutil.PluginError(PLUGIN_NAME, 'Error cloning failed. Quitting.', opts);
+    // }
 
     // verificamos se esta tudo ok com  o directory
     if (shell.test('-d', directory)) {

@@ -8,13 +8,12 @@
     "main": "./index.js",
     "dependencies": {
         "gulp": "latest",
+        "base-64": "latest",
         "shelljs": "latest",
         "gulp-util": "latest"
     },
-    "devDependencies": {
-    },
-    "scripts": {
-    },
+    "devDependencies": {},
+    "scripts": {},
     "engines": {},
     "keywords": [
         "gulp",

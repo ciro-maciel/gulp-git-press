@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 var pkg = require('./package.json'),
     banner = [
         '/**',
-        ' * C37 - Controller - Desktop in <%= new Date().toString() %>',
+        ' * ciro.maciel <ciro.maciel@c37.co> - in <%= new Date().toString() %>',
         ' *',
         ' * <%= pkg.name %> - <%= pkg.description %>',
         ' * @version <%= pkg.version %>',
@@ -30,18 +30,19 @@ var pkg = require('./package.json'),
 gulp.task('deploy', function () {
 
     // https://www.base64encode.org/
+    // http://base64encode.net/
     var opts = {
         committer: {
-            name: 'Ciro Cesar Maciel',
-            email: 'ciro.maciel@c37.co'
+            name: '',
+            email: ''
         },
         auth: {
-            userName: 'ciro-maciel',
-            token: '7cb3f9c32a2bb5a6fe83ac901057a79dc0bbf342'
+            userName: '',
+            token: ''
         },
-        repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
+        repositoryUrl: '',
         branchName: 'master',
-        tagName: 'v0.0.11',
+        tagName: 'v0.0.1',
         directory: 'deploy'
     }
 
