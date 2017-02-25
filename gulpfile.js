@@ -37,11 +37,11 @@ gulp.task('deploy', function () {
         },
         auth: {
             userName: 'ciro-maciel',
-            token: 'OTZjMGY2ODZjZjUzOGYzNmU3YmFmZTJhNTUxODlmM2M3ZWU0MWZiNQ=='
+            token: '7cb3f9c32a2bb5a6fe83ac901057a79dc0bbf342'
         },
         repositoryUrl: 'https://github.com/ciro-maciel/deploy-to-github.git',
         branchName: 'master',
-        tagName: 'v0.0.10',
+        tagName: 'v0.0.11',
         directory: 'deploy'
     }
 

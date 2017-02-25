@@ -1,10 +1,17 @@
 'use strict';
 
+// https://github.com/shelljs/shelljs
 var shell = require('shelljs'),
-    gutil = require('gulp-util');
+    gutil = require('gulp-util'),
+    exec = require('child_process').execSync;
 
 var CLONE_DIR = '_gulp-github',
     PLUGIN_NAME = 'gulp-bump';
+
+
+process.on('SIGINT', function () {
+    console.log('done');
+});
 
 
 module.exports = function (opts) {
@@ -78,10 +85,13 @@ module.exports = function (opts) {
 
     gutil.log('cloning ... please wait');
 
+    // https://github.com/shelljs/shelljs/issues/165
+    // testes para lock 
+    // exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR, { stdio: 'inherit' });
+
     // executamos o clone do repository no directory informado
-    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR, {
-            silent: true
-        }).code !== 0) {
+    // nao usar silent - aparentemente causando um lock! ;(
+    if (shell.exec('git clone --single-branch --branch ' + branchName + ' ' + repositoryUrl + ' ' + CLONE_DIR).code !== 0) {
         throw new gutil.PluginError(PLUGIN_NAME, 'Error cloning failed. Quitting.', opts);
     }
 
