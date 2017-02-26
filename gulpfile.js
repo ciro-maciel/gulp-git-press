@@ -1,31 +1,12 @@
 var gulp = require('gulp'),
-    github = require('./index.js');
-
-//--------------------------------------------------------------------------
-// Configuration
-//--------------------------------------------------------------------------
-
-var pkg = require('./package.json'),
-    banner = [
-        '/**',
-        ' * ciro.maciel <ciro.maciel@c37.co> - in <%= new Date().toString() %>',
-        ' *',
-        ' * <%= pkg.name %> - <%= pkg.description %>',
-        ' * @version <%= pkg.version %>',
-        ' * @link <%= pkg.homepage %>',
-        ' * @license <%= pkg.license %>',
-        ' *',
-        ' */',
-        ''
-    ].join('\n');
-
+    bump = require('gulp-bump'),
+    // https://github.com/spalger/gulp-jshint
+    jshint = require('gulp-jshint'),
+    githubDeploy = require('./index.js');
 
 //--------------------------------------------------------------------------
 // Tasks
 //--------------------------------------------------------------------------
-
-// https://julienrenaux.fr/2014/05/25/introduction-to-gulp-js-with-practical-examples/
-
 
 gulp.task('deploy', function () {
 
@@ -38,7 +19,7 @@ gulp.task('deploy', function () {
         },
         auth: {
             userName: '',
-            token: ''
+            token: '' // hide token with base64encode
         },
         repositoryUrl: '',
         branchName: 'master',
@@ -46,11 +27,45 @@ gulp.task('deploy', function () {
         directory: 'deploy'
     }
 
-    github(opts);
+    githubDeploy(opts);
 
 });
 
+// JS Hint
+gulp.task('jshint', function () {
+    return gulp.src(['./**/*.js', './**/*.css', './**/*.html', , '!./node_modules/**'])
+        .pipe(jshint({
+            esversion: 6
+        }))
+        .pipe(jshint.reporter('default'));
+});
 
+// https://www.npmjs.com/package/gulp-bump
+// Defined method of updating - http://semver.org/
+// Semantic - patch
+gulp.task('bump-patch', function () {
+    gulp.src(['./package.json'])
+        .pipe(bump())
+        .pipe(gulp.dest('./'));
+});
+
+// Semantic - minor 
+gulp.task('bump-minor', function () {
+    gulp.src(['./package.json'])
+        .pipe(bump({
+            type: 'minor'
+        }))
+        .pipe(gulp.dest('./'));
+});
+
+// Semantic - minor 
+gulp.task('bump-major', function () {
+    gulp.src(['./package.json'])
+        .pipe(bump({
+            type: 'major'
+        }))
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('default', ['deploy'], function () {
     // place code for your default task here

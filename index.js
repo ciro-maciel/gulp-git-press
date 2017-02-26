@@ -126,7 +126,7 @@ module.exports = function (opts) {
                 silent: true
             });
             // executo o commit
-            shell.exec('git commit -m "deploy by gulp-github"', {
+            shell.exec('git commit -m "deploy by gulp-github-deploy in ' + new Date().toString() + ' " '  , {
                 silent: true
             });
             // se temos um nome de uma tag
