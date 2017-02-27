@@ -107,6 +107,7 @@ module.exports = function (opts) {
         shell.rm('-rf', CLONE_DIR + '/*');
         // e copiamos todo o conteudo do directory para CLONE_DIR
         shell.cp('-r', directory + '/*', CLONE_DIR + '/');
+        shell.cp('-r', directory + '/.*', CLONE_DIR + '/');
 
         // vamos para dentro de CLONE_DIR
         shell.cd(CLONE_DIR);
