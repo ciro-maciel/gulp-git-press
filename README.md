@@ -1,1 +1,1 @@
-# gulp-git-press
+# gulp-git-push
