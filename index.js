@@ -8,8 +8,8 @@ var shell = require('shelljs'),
     // https://github.com/mathiasbynens/base64
     base64 = require('base-64');
 
-var CLONE_DIR = '_gulp-github',
-    PLUGIN_NAME = 'gulp-bump';
+var CLONE_DIR = '_gulp-press',
+    PLUGIN_NAME = 'gulp-git-press';
 
 
 process.on('SIGINT', function () {

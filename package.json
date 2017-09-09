@@ -1,9 +1,9 @@
 {
-    "name": "gulp-github-deploy",
+    "name": "gulp-git-press",
     "description": "Deploy selected folder to GitHub with Gulp (gulpjs.com)",
-    "version": "0.0.5",
-    "homepage": "https://github.com/ciro-maciel/gulp-github-deploy",
-    "repository": "git://github.com/ciro-maciel/gulp-github-deploy.git",
+    "version": "0.1.0",
+    "homepage": "https://github.com/ciro-maciel/gulp-git-press",
+    "repository": "git://github.com/ciro-maciel/gulp-git-press.git",
     "author": "Ciro Cesar Maciel <ciro.maciel@c37.co>",
     "main": "./index.js",
     "dependencies": {
@@ -24,7 +24,7 @@
         "gulpjs",
         "deploy",
         "clone",
-        "gulp-github-deploy"
+        "gulp-git-press"
     ],
     "license": "MIT"
 }
