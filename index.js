@@ -8,8 +8,8 @@ var shell = require('shelljs'),
     // https://github.com/mathiasbynens/base64
     base64 = require('base-64');
 
-var CLONE_DIR = '_gulp-press',
-    PLUGIN_NAME = 'gulp-git-press';
+var CLONE_DIR = '_gulp-push',
+    PLUGIN_NAME = 'gulp-git-push';
 
 
 process.on('SIGINT', function () {
@@ -40,7 +40,7 @@ module.exports = function (opts) {
 
     // o header para a mensagem
     gutil.log('==============================');
-    gutil.log('DEPLOY/CLONE TO GITHUB');
+    gutil.log('PUSH TO GIT URL');
     gutil.log('==============================');
 
     // os parametros 
@@ -53,7 +53,7 @@ module.exports = function (opts) {
     if (tagName) {
         gutil.log('tag:                 ' + tagName);
     }
-    gutil.log('directory to deploy: ' + directory);
+    gutil.log('directory to push: ' + directory);
     gutil.log('=============================');
 
     // fazemos o bakup do diretorio git existente
